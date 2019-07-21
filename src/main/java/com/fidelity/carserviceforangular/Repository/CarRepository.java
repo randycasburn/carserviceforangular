@@ -1,7 +1,6 @@
 package com.fidelity.carserviceforangular.Repository;
 
 import com.fidelity.carserviceforangular.model.Car;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -11,12 +10,10 @@ import java.util.stream.Collectors;
 
 @Repository
 public class CarRepository {
-    @Autowired
-    Car car;
 
     private List<Car> cars;
 
-    CarRepository(Car car) {
+    CarRepository() {
         cars = new ArrayList<>();
         cars.add(new Car("Roadster", "Tesla", 2017, 2, 120_000.0));
         cars.add(new Car("F40", "Ferrari", 2017, 2, 500_000.0));
@@ -27,7 +24,7 @@ public class CarRepository {
     }
 
     public List<Car> getCars(String filter, int count) {
-        Comparator comparator;
+        Comparator<Car> comparator;
         int limit = (count != 0)? count : cars.size();
         switch(filter){
             case("model") :
@@ -49,8 +46,8 @@ public class CarRepository {
         return getCarsFiltered(comparator, limit);
     }
 
-    public List<Car> getCarsFiltered(Comparator<? super Car> comparator, int limit) {
-        return (List<Car>) cars.stream()
+    private List<Car> getCarsFiltered(Comparator<? super Car> comparator, int limit) {
+        return cars.stream()
                 .sorted(comparator)
                 .limit(limit)
                 .collect(Collectors.toList());

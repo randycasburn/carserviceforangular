@@ -2,8 +2,6 @@ package com.fidelity.carserviceforangular.model;
 
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-
 @Component
 public class Car {
     private String model;
